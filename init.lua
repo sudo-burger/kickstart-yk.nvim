@@ -315,7 +315,7 @@ require('lazy').setup({
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       {
-        'nvim-telescope/telescope-media-files.nvim',
+        'sudo-burger/telescope-media-files.nvim',
         -- filetypes whitelist
         -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
         -- filetypes = {"png", "webp", "jpg", "jpeg"},
