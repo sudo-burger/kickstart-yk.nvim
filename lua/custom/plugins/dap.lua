@@ -7,27 +7,32 @@ return {
     'theHamsta/nvim-dap-virtual-text',
   },
   config = function()
-    local d = require 'dap'
-    local u = require 'dapui'
-    u.setup()
-    local function close_debugger()
-      u.close()
-      d.terminate()
-    end
+    local dap, dapui = require 'dap', require 'dapui'
+    dapui.setup()
+    --
     -- Show variable values inline, as "virtual text".
     require('nvim-dap-virtual-text').setup {}
 
+    -- Help functions.
+    -- Open/close cleanly.
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated['dapui_config'] = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited['dapui_config'] = function()
+      dapui.close()
+    end
     require('which-key').register {
       ['<leader>cd'] = { name = '[d]ebugger', _ = 'which_key_ignore' },
     }
-    vim.keymap.set('n', '<leader>cdO', u.open, { desc = '[o]pen' })
-    vim.keymap.set('n', '<leader>cdC', close_debugger, { desc = '[c]lose' })
-    vim.keymap.set('n', '<leader>cdb', require('dap').toggle_breakpoint, { desc = '[b]reakpoint' })
-    vim.keymap.set('n', '<leader>cdc', require('dap').continue, { desc = '[c]ontinue' })
-    vim.keymap.set('n', '<leader>cds', require('dap').step_into, { desc = '[s]tep into' })
-    vim.keymap.set('n', '<leader>cdS', require('dap').step_out, { desc = '[S]tep out' })
-
-    -- Language-specific.
-    require('dap-python').setup()
+    vim.keymap.set('n', '<leader>cdO', dap.continue, { desc = '[O]pen' })
+    vim.keymap.set('n', '<leader>cdC', dap.terminate, { desc = '[C]lose' })
+    vim.keymap.set('n', '<leader>cdb', dap.toggle_breakpoint, { desc = '[b]reakpoint' })
+    vim.keymap.set('n', '<leader>cdB', ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", { desc = '[B]reakpoint (conditional)' })
+    vim.keymap.set('n', '<leader>cdr', dap.repl.open, { desc = '[r]epl' })
+    vim.keymap.set('n', '<leader>cds', dap.step_into, { desc = '[s]tep into' })
+    vim.keymap.set('n', '<leader>cdS', dap.step_over, { desc = '[S]tep over' })
   end,
 }
