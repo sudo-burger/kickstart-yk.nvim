@@ -5,7 +5,9 @@ return {
     -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
     -- filetypes = {"png", "webp", "jpg", "jpeg"},
     -- find command (defaults to `fd`),
-    find_cmd = 'rg',
+    opts = {
+      find_cmd = 'rg',
+    },
     init = function()
       pcall(require('telescope').load_extension, 'media_files')
       vim.keymap.set('n', '<leader>sm', function()
