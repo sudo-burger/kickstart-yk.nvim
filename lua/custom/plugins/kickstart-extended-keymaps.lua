@@ -1,3 +1,5 @@
+vim.go.filetype = 1
+vim.g.markdown_folding = 1
 return {
   {
     -- Additional keymaps for nvim-cmp.
