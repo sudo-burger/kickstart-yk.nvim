@@ -23,7 +23,9 @@ return {
           search = true, -- search the web/selection on the web if nothing else is found
         },
         handler_options = {
-          search_engine = 'google', -- you can select between google, bing, duckduckgo, and ecosia
+          --search_engine = 'google', -- you can select between google, bing, duckduckgo, and ecosia
+          --select_for_search = true,
+          search_engine = 'https://perplexity.ai/search?q=',
           -- search_engine = 'https://search.brave.com/search?q=', -- or you can pass in a custom search engine
         },
       }
